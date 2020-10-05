@@ -1,34 +1,47 @@
 package ru.job4j.auth.domain;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "person")
 public class Person {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "employee_id")
+    private Integer employeeId;
 
     public Person() {
     }
 
-    public int getId() {
+    public static Person of(Integer id) {
+        Person person = new Person();
+        person.setId(id);
+        return person;
+    }
+
+    public static Person of(String login, String password) {
+        Person person = new Person();
+        person.setLogin(login);
+        person.setPassword(password);
+        return person;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public Person(int id, String login, String password) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-    }
-
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -50,23 +63,37 @@ public class Person {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Person person = (Person) o;
-        return id == person.id;
+        return Objects.equals(id, person.id)
+                && Objects.equals(login, person.login)
+                && Objects.equals(password, person.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, login, password);
     }
 
     @Override
     public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "Person{"
+                + "id=" + id
+                + ", login='" + login + '\''
+                + ", password='" + password + '\''
+                + '}';
+    }
+
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 }
