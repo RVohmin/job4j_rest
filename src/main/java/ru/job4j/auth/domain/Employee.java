@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "employee")
+//@Table(name = "employee")
 public class Employee {
 
     @Id
@@ -16,22 +16,20 @@ public class Employee {
     private Integer id;
 
     @Column(name = "name")
-    private String firstName;
+    private String name;
 
     @Column(name = "surname")
-    private String lastName;
+    private String surname;
 
-    @Column(name = "individualTaxNumber")
+    @Column(name = "inn")
     private Long inn;
 
-    @Column(name = "hiredDate")
-    private Timestamp dateEmployment;
+    @Column(name = "hired")
+    private Timestamp hired;
 
     @Transient
+//    @OneToMany
     private List<Person> accounts = new ArrayList<>();
-
-    public Employee() {
-    }
 
     public Integer getId() {
         return id;
@@ -41,20 +39,20 @@ public class Employee {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String lastName) {
+        this.surname = lastName;
     }
 
     public Long getInn() {
@@ -65,12 +63,12 @@ public class Employee {
         this.inn = inn;
     }
 
-    public Timestamp getDateEmployment() {
-        return dateEmployment;
+    public Timestamp getHired() {
+        return hired;
     }
 
-    public void setDateEmployment(Timestamp dateEmployment) {
-        this.dateEmployment = dateEmployment;
+    public void setHired(Timestamp dateEmployment) {
+        this.hired = dateEmployment;
     }
 
     public List<Person> getAccounts() {
@@ -90,14 +88,11 @@ public class Employee {
             return false;
         }
         Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id)
-                && Objects.equals(firstName, employee.firstName)
-                && Objects.equals(lastName, employee.lastName)
-                && Objects.equals(inn, employee.inn);
+        return Objects.equals(id, employee.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, inn);
+        return Objects.hash(id, inn);
     }
 }

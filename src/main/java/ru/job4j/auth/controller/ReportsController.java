@@ -1,6 +1,5 @@
 package ru.job4j.auth.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import ru.job4j.auth.domain.Person;
 import ru.job4j.auth.domain.Report;
+import ru.job4j.auth.repository.EmployeeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,15 @@ import java.util.List;
 @RequestMapping("/report")
 public class ReportsController {
     private final RestTemplate rest;
+    private final EmployeeRepository employeeRepository;
 
     private static final String API = "http://localhost:8080/person/";
 
     private static final String API_ID = "http://localhost:8080/person/{id}";
 
-    public ReportsController(RestTemplate rest) {
+    public ReportsController(RestTemplate rest, EmployeeRepository employeeRepository) {
         this.rest = rest;
+        this.employeeRepository = employeeRepository;
     }
 
     @GetMapping("/")
@@ -38,6 +40,7 @@ public class ReportsController {
             rsl.add(report);
         }
         return rsl;
+
     }
 
     @PostMapping("/")
